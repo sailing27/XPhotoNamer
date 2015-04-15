@@ -197,8 +197,7 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
             List<String> allFiles = scanAllFile(file);
             logger.info("Folder:" + file + " has " + allFiles.size() + " file.");
             publishProgress(idx,1);
-            processAllFile(allFiles, file, idx);
-            totalFile += allFiles.size();
+            totalFile += processAllFile(allFiles, file, idx);
             //进度置为100%
             publishProgress(idx, 100);
             idx++;
@@ -267,10 +266,11 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
      * @param idx
      * @return
      */
-    private void processAllFile(List<String> allFiles, String root, int idx) {
+    private int processAllFile(List<String> allFiles, String root, int idx) {
+        int processFileNum = 0;
         if (null == allFiles || allFiles.size() == 0) {
             logger.info("allFiles is null.");
-            return;
+            return processFileNum;
         }
         int total = allFiles.size();
         int i = 1;
@@ -278,16 +278,9 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
         for (String fName : allFiles) {
             //扫描文件占1%的进度
             int p = (int) (i * 1.0/total * 99);
-            logger.info("Progress:"+ idx + " : "+ p + "%");
+            logger.info("Progress:" + idx + " : " + p + "%");
             publishProgress(idx, p);
             i++;
-
-            //TODO delete
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             File f = new File(fName);
 
@@ -311,6 +304,12 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
 
             File newFile = new File(distFilePath);
 
+            //如果目标文件已存在，跳过。
+            if (newFile.exists()) {
+                logger.error("File already exist:" + newFile.getAbsolutePath());
+                continue;
+            }
+
             File newFolder = newFile.getParentFile();
 
             //目标目录不存在，则创建子目录。
@@ -318,7 +317,7 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
                 logger.info("Create new path folder:" + newFolder.getAbsolutePath());
                 if (!newFolder.mkdirs()) {
                     logger.error("create folder failed:" + newFolder.getAbsolutePath());
-                    return;
+                    return processFileNum;
                 }
             }
 
@@ -328,12 +327,12 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
                 continue;
             }
             logger.info(f.getAbsolutePath() + " to " + newFile.getAbsolutePath());
-
+            processFileNum += 1;
             if (!copyFile(f, newFile)) {
                 logger.error("Copy file failed:" + f.getAbsolutePath());
             }
         }
-
+        return processFileNum;
     }
 
     /**
