@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android_custom="http://schemas.android.com/apk/res/com.sailing.xphoto"
+    android:layout_height="wrap_content"
     android:paddingTop="2pt"
     android:paddingBottom="4pt"
     android:paddingLeft="3pt"
     android:paddingRight="3pt">
-
-
 
     <LinearLayout android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -35,11 +35,17 @@
                     android:textSize="7pt" />
         </LinearLayout>
     </LinearLayout>
-    <ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <com.sailing.xphoto.widget.RoundProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:id="@+id/progressBar"/>
+        android_custom:roundColor="#DDDDDD"
+        android_custom:roundProgressColor="@android:color/holo_green_dark"
+        android_custom:textColor="#AAAAAA"
+        android_custom:textIsDisplayable="true"
+        android_custom:roundWidth="5dip"
+        android_custom:textSize="5pt"/>
 </RelativeLayout>

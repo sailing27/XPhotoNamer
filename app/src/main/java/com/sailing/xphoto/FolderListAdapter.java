@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.sailing.xphoto.widget.RoundProgressBar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,7 +141,10 @@ public class FolderListAdapter extends BaseAdapter {
             holder.image.setImageResource(R.drawable.folder);
             holder.folder = (TextView) convertView.findViewById(R.id.folder);
             holder.title = (TextView) convertView.findViewById(R.id.file_name);
-            holder.progress = (ProgressBar) convertView.findViewById(R.id.progressBar);
+            holder.progress = (RoundProgressBar) convertView.findViewById(R.id.progressBar);
+
+
+
             convertView.setTag(holder);
         }else{
             //减少findviewbyid()
@@ -166,9 +170,9 @@ public class FolderListAdapter extends BaseAdapter {
         if (null != progress && progress < 100) {
             logger.info("Update progress " + progress + "@" + fileName);
             holder.progress.setVisibility(View.VISIBLE);
+            holder.progress.setProgress(progress);
         }else {
             holder.progress.setVisibility(View.GONE);
-
         }
         return convertView;
     }
@@ -178,6 +182,6 @@ public class FolderListAdapter extends BaseAdapter {
         public ImageView image;
         public TextView title;
         public TextView folder;
-        public ProgressBar progress;
+        public RoundProgressBar progress;
     }
 }
