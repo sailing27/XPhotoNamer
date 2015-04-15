@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">XPhotoNamer</string>
+    <string name="action_add">添加</string>
+    <string name="action_settings">设置</string>
+    <string name="btn_start">开始</string>
+    <string name="no_move_file">不移动文件。</string>
+    <string name="title_activity_help">帮助</string>
+</resources>

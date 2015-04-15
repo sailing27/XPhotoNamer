@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_header_filter" >
+        <EditTextPreference
+            android:dialogTitle="@string/pref_title_filter_folder_rule"
+            android:key="@string/pref_key_filter_folder_rule"
+            android:defaultValue="*7200"
+            android:selectAllOnFocus="true"
+            android:summary="@string/pref_default_summary_filter_folder_ruler"
+            android:title="@string/pref_title_filter_folder_rule" />
+
+        <EditTextPreference
+            android:dialogTitle="@string/pref_title_filter_file_rule"
+            android:key="@string/pref_key_filter_file_rule"
+            android:defaultValue="DSC*.JPG"
+            android:selectAllOnFocus="true"
+            android:summary="@string/pref_default_summary_filter_file_ruler"
+            android:title="@string/pref_title_filter_file_rule" />
+
+        <CheckBoxPreference
+            android:key="@string/pref_key_is_recursive"
+            android:title="@string/pref_title_recursive"
+            android:defaultValue="false"
+            />
+
+        <!--<ListPreference-->
+            <!--android:dialogTitle="请选择一项"-->
+            <!--android:entries="@array/entries_list_preference"-->
+            <!--android:entryValues="@array/entryvalues_list_preference"-->
+            <!--android:key="list_preferenc"-->
+            <!--android:summary="一个使用了列表对话框的例子"-->
+            <!--android:title="请选择一项" />-->
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_title_move" >
+        <!-- This PreferenceScreen tag serves as a screen break (similar to page break in word processing). Like for other preference types, we assign a key here so it is able to save and restore its instance state. -->
+        <EditTextPreference
+            android:dialogTitle="@string/pref_title_move_dist_folder"
+            android:key="@string/pref_key_move_dist_folder"
+            android:selectAllOnFocus="true"
+            android:defaultValue="/sdcard/DCIM/XPhotoNamer"
+            android:summary="@string/pref_default_summary_move_dist_folder"
+            android:title="@string/pref_title_move_dist_folder" />
+
+        <CheckBoxPreference
+            android:key="@string/pref_key_is_create_date_folder"
+            android:title="@string/pref_title_create_date_folder"
+            android:defaultValue="true"
+            />
+
+
+        <EditTextPreference
+            android:dialogTitle="@string/pref_title_dist_file_prename"
+            android:key="@string/pref_key_dist_file_prename"
+            android:defaultValue="D7200"
+            android:selectAllOnFocus="true"
+            android:summary="@string/pref_default_summary_dist_file_prename"
+            android:title="@string/pref_title_dist_file_prename" />
+    </PreferenceCategory>
+
+    <PreferenceScreen
+    android:title="帮助" >
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.sailing.xphoto"
+            android:targetClass="com.sailing.xphoto.help.HelpActivity" />
+    </PreferenceScreen>
+
+
+</PreferenceScreen>
