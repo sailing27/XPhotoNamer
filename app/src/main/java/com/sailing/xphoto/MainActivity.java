@@ -1,5 +1,7 @@
 package com.sailing.xphoto;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -43,8 +45,24 @@ public class MainActivity extends ActionBarActivity implements DirectoryChooserF
         //添加删除处理
         folderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mDataAdapter.remove(position);
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                if (null!=mDataAdapter) {
+                    //确认操作。
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setIcon(android.R.drawable.ic_dialog_alert);
+                    builder.setTitle(R.string.msg_confirm_delete);
+                    builder.setNegativeButton(R.string.btn_cancel_delete, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        }
+                    });
+                    builder.setPositiveButton(R.string.btn_confirm_delete, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            mDataAdapter.remove(position);
+                        }
+                    });
+                    builder.create().show();
+                }
+
             }
         });
 

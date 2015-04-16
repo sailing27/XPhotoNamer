@@ -7,4 +7,7 @@
     <string name="btn_start">开始</string>
     <string name="no_move_file">不移动文件。</string>
     <string name="title_activity_help">帮助</string>
+    <string name="msg_confirm_delete">确定要删除吗?</string>
+    <string name="btn_confirm_delete">确定</string>
+    <string name="btn_cancel_delete">取消</string>
 </resources>
