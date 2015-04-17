@@ -4,7 +4,9 @@
 
 
 ##界面截图
+主界面
 ![main](https://raw.githubusercontent.com/sailing27/XPhotoNamer/master/doc/image/Main.png)
+设置界面
 ![setting](https://raw.githubusercontent.com/sailing27/XPhotoNamer/master/doc/image/Setting.png)
 
 
