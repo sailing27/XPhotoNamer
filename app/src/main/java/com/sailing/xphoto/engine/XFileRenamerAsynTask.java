@@ -8,6 +8,7 @@ import com.sailing.xphoto.MainActivity;
 import com.sailing.xphoto.R;
 import com.sailing.xphoto.XConst;
 import com.sailing.xphoto.XPreferencesHelper;
+import com.sailing.xphoto.util.JPGUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,7 +115,6 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
         int p = progress[1];
 
         activity.updateProgress(idx, p);
-
     }
 
     /**
@@ -183,10 +183,12 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
         isRecursive = getBooleanConfig(R.string.pref_key_is_recursive);
         isCreateDateFolder = getBooleanConfig(R.string.pref_key_is_create_date_folder);
 
+        //空白表示不过滤任何关键字。
         if(null == fileNameMather || fileNameMather.isEmpty()) {
             fileNameMather = "*";
         }
 
+        //空白表示不过滤任何关键字。
         if(null == folderNameMather || folderNameMather.isEmpty()) {
             folderNameMather = "*";
         }
@@ -284,7 +286,13 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
 
             File f = new File(fName);
 
-            Long modifyTime = getFileTime(f);
+            Long modifyTime = JPGUtil.readExifTime(f);
+
+            //获取失败，则直接取文件时间。
+            if(null == modifyTime) {
+                logger.info("Read file time from EXIF failed!" + f.getName());
+                modifyTime = getFileTime(f);
+            }
 
             String extName = getFileExName(f.getName());
             String newName = getFileName(targetFilePreName, modifyTime, extName);
@@ -331,6 +339,9 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
             if (!copyFile(f, newFile)) {
                 logger.error("Copy file failed:" + f.getAbsolutePath());
             }
+
+            //设置新文件与源文件相同的时间
+            newFile.setLastModified(modifyTime);
         }
         return processFileNum;
     }
