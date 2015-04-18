@@ -44,9 +44,13 @@
         <CheckBoxPreference
             android:key="@string/pref_key_is_create_date_folder"
             android:title="@string/pref_title_create_date_folder"
-            android:defaultValue="true"
-            />
+            android:defaultValue="true" />
 
+
+        <CheckBoxPreference
+            android:key="@string/pref_key_is_keep_src_file"
+            android:title="@string/pref_title_keep_src_file"
+            android:defaultValue="true" />
 
         <EditTextPreference
             android:dialogTitle="@string/pref_title_dist_file_prename"

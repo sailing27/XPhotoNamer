@@ -73,6 +73,9 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
     /**是创建日期目录*/
     private boolean isCreateDateFolder = false;
 
+    /**是否保留源文件*/
+    private boolean isKeepSrcFile = false;
+
     /**
      *
      * @param activity
@@ -182,6 +185,8 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
         targetFilePreName = getStrConfig(R.string.pref_key_dist_file_prename);
         isRecursive = getBooleanConfig(R.string.pref_key_is_recursive);
         isCreateDateFolder = getBooleanConfig(R.string.pref_key_is_create_date_folder);
+        isKeepSrcFile = getBooleanConfig(R.string.pref_title_keep_src_file);
+
 
         //空白表示不过滤任何关键字。
         if(null == fileNameMather || fileNameMather.isEmpty()) {
@@ -336,15 +341,27 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
             }
             logger.info(f.getAbsolutePath() + " to " + newFile.getAbsolutePath());
             processFileNum += 1;
-            if (!copyFile(f, newFile)) {
-                logger.error("Copy file failed:" + f.getAbsolutePath());
-            }
-
+            handleOneFile(f, newFile);
             //设置新文件与源文件相同的时间
             newFile.setLastModified(modifyTime);
         }
         return processFileNum;
     }
+
+
+    private void handleOneFile(File f, File newFile) {
+        //如果设置保留源文件，则用Copy的方式。
+        if(isKeepSrcFile) {
+            if (!copyFile(f, newFile)) {
+                logger.error("Copy file failed:" + f.getAbsolutePath());
+            }
+        }else {
+            if (!f.renameTo(newFile)) {
+                logger.error("Move file failed:" + f.getAbsolutePath());
+            }
+        }
+    }
+
 
     /**
      * 获取文件时间，优先从文件内容中获取。

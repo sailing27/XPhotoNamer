@@ -69,7 +69,8 @@ public class XFragmentPreferences extends Activity {
             }
 
             if(!key.equals(getString(R.string.pref_key_is_recursive))
-                    && !key.equals(getString(R.string.pref_key_is_create_date_folder))) {
+                    && !key.equals(getString(R.string.pref_key_is_create_date_folder))
+                    && !key.equals(getString(R.string.pref_key_is_keep_src_file))) {
                 String summary = sharedPreferences.getString(key, "");
                 if(key.equals(getString(R.string.pref_key_move_dist_folder)))
                 {

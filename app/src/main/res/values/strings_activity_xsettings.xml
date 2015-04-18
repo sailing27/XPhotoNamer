@@ -31,11 +31,12 @@
     <string name="pref_title_move_dist_folder">目标目录</string>
     <string name="pref_default_summary_move_dist_folder">移动文件到目标文件夹</string>
 
-
-
     <string name="pref_title_dist_file_prename">文件名前缀</string>
-    <string name="pref_key_dist_file_prename">pref_key_dist_file_prename</string>
+    <string name="pref_key_is_keep_src_file">pref_key_is_keep_src_file</string>
     <string name="pref_default_summary_dist_file_prename">目标文件名前缀</string>
+
+    <string name="pref_key_dist_file_prename">pref_key_dist_file_prename</string>
+    <string name="pref_title_keep_src_file">保留源文件</string>
 
 
     <!--<string name="pref_title_add_friends_to_messages">Add friends to messages</string>-->
