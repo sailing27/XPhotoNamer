@@ -12,4 +12,3 @@
 
 ##联系方式
 * Email:<sailing27@gmail.com>
-* QQ: 38218651
