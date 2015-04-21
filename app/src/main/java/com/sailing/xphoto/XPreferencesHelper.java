@@ -75,14 +75,14 @@ public class XPreferencesHelper {
      */
     public void saveFolderInfo(String path){
         Set<String> folderSet = mySharedPreferences.getStringSet(XConst.KEY_FOLDER_LIST, new HashSet<String>());
+        folderSet.add(path);
 
         SharedPreferences.Editor editor = mySharedPreferences.edit();
-        folderSet.add(path);
+        editor.remove(XConst.PREFRENCES_KEY_NAME);
         editor.putStringSet(XConst.KEY_FOLDER_LIST, folderSet);
 
         //提交当前数据
         editor.apply();
-
         logger.info("Save folder:" + path);
     }
 
@@ -93,16 +93,14 @@ public class XPreferencesHelper {
      */
     public void removeFolderInfo(String path){
         Set<String> folderSet = mySharedPreferences.getStringSet(XConst.KEY_FOLDER_LIST, new HashSet<String>());
+        folderSet.remove(path);
 
         SharedPreferences.Editor editor = mySharedPreferences.edit();
-        folderSet.remove(path);
+        editor.remove(XConst.PREFRENCES_KEY_NAME);
         editor.putStringSet(XConst.KEY_FOLDER_LIST, folderSet);
 
         //提交当前数据
         editor.apply();
-
         logger.info("Remove folder:" + path);
     }
-
-
 }
