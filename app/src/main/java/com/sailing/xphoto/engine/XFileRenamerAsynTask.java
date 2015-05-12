@@ -240,6 +240,7 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
                 if (f.isDirectory() && !f.getName().equals(".") && !f.getName().equals("..")) {
                     //目录名过滤
                     logger.info("Found folder:" + f.getAbsolutePath());
+
                     if (match(f.getName(), folderNameMather) && isRecursive) {
                         List<String> subFiles = scanAllFile(f.getAbsolutePath());
 
@@ -263,7 +264,7 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
                 }
             }
         }
-
+        //Toast.makeText(activity, "Found file: " + fileList.size(), Toast.LENGTH_SHORT).show();
         return fileList;
     }
 
@@ -302,26 +303,50 @@ public class XFileRenamerAsynTask extends AsyncTask<Void, Integer, String> {
             String extName = getFileExName(f.getName());
             String newName = getFileName(targetFilePreName, modifyTime, extName);
             String distFilePath = this.targetFolder;
+
             if (null == distFilePath || distFilePath.isEmpty()) {
                 distFilePath = root;
             }
-            distFilePath += File.separator;
-            if (isCreateDateFolder) {
-                distFilePath += folderFormatter.format(modifyTime);
-                distFilePath += File.separator;
+            File newFile = null;
+            boolean isExist = false;
+
+
+            String ttt = distFilePath;
+            for(int iName =1;iName<1000;iName++) {
+                ttt += File.separator;
+                if (isCreateDateFolder) {
+                    ttt += folderFormatter.format(modifyTime);
+                    ttt += File.separator;
+                }
+
+                ttt += newName;
+
+                logger.info("target file:" + ttt);
+
+                newFile = new File(ttt);
+
+                //如果目标文件已存在，则检查文件大小是否一致。
+                if (newFile.exists()) {
+                    if (f.length() != newFile.length()) {
+                        //后延一秒
+                        logger.info("Exist same file name" + ttt);
+                        newName = getFileName(targetFilePreName, modifyTime , "_" + iName + extName);
+                        ttt = distFilePath;
+                        continue;
+                    }
+                    else {
+                        logger.error("File already exist:" + newFile.getAbsolutePath());
+                        isExist = true;
+                        break;
+                    }
+                }
+                break;
             }
 
-            distFilePath += newName;
-
-            logger.info("target file:" + distFilePath);
-
-            File newFile = new File(distFilePath);
-
-            //如果目标文件已存在，跳过。
-            if (newFile.exists()) {
-                logger.error("File already exist:" + newFile.getAbsolutePath());
+            if(isExist){
                 continue;
             }
+
 
             File newFolder = newFile.getParentFile();
 
